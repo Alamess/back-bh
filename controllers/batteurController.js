@@ -90,7 +90,30 @@ exports.addBatteur = async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
+exports.deletePicturesToBatteur = async (req, res) => {
+  try {
+      const batteur = await Batteur.findOne({ slug: req.params.slug });
+      const index = req.body.index;
+      if (!batteur) {
+        return res
+          .status(404)
+          .json({ success: false, message: "Batteur not found" });
+      }
+      batteur.images.splice(index,1);
+      await batteur.save();
 
+      res.status(200).json({
+        success: true,
+        message: "Picture deleted to batteur successfully",
+        batteur,
+        index : index
+      });
+    }
+   catch (error) {
+    console.error("Error deleted picture to batteur:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
 exports.addPicturesToBatteur = async (req, res) => {
   try {
     upload(req, res, async function (err) {

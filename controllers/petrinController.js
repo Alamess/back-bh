@@ -88,6 +88,30 @@ exports.addPetrin = async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
+exports.deletePicturesFromPetrin = async (req, res) => {
+  try {
+    const { index } = req.body;
+    const petrin = await Petrin.findOne({ slug: req.params.slug });
+
+    if (!petrin) {
+      return res.status(404).json({ success: false, message: "Petrin not found" });
+    }
+    if (index < 0 || index >= petrin.images.length) {
+      return res.status(400).json({ success: false, message: "Invalid index" });
+    }
+    petrin.images.splice(index, 1);
+    await petrin.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Picture deleted from petrin successfully",
+      petrin,
+      index: index
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
 
 exports.addPicturesToPetrin = async (req, res) => {
   try {

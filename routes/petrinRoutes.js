@@ -6,6 +6,7 @@ router.post("/add", petrinController.addPetrin);
 
 router.post("/add-picture/:slug", petrinController.addPicturesToPetrin);
 
+router.post("/delete-picture/:slug", petrinController.deletePicturesFromPetrin);
 router.get("/all", petrinController.getPetrins);
 
 router.get("/:slug", petrinController.getPetrinBySlug);

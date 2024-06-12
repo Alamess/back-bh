@@ -6,6 +6,7 @@ router.post("/add", batteurController.addBatteur);
 
 router.post("/add-picture/:slug", batteurController.addPicturesToBatteur);
 
+router.post("/delete-picture/:slug", batteurController.deletePicturesToBatteur);
 router.get("/all", batteurController.getBatteurs);
 
 router.get("/:slug", batteurController.getBatteurBySlug);
